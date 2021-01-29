@@ -9,11 +9,33 @@ class Habits extends Component {
       { id: 3, name: 'Coding', count: 0 },
     ],
   };
+
+  handleIncrement = habit => {
+    this.setState({ count: (habit.count += 1) });
+  };
+
+  handleDecrement = habit => {
+    this.setState({ count: habit.count <= 0 ? 0 : (habit.count -= 1) });
+  };
+
+  handleDelet = habit => {
+    const { habits } = this.state;
+    this.setState({
+      habits: habits.filter(item => item.id !== habit.id),
+    });
+  };
+
   render() {
     return (
       <ul>
         {this.state.habits.map(habit => (
-          <Habit key={habit.id} habit={habit} /> // habit이라는 프로퍼티에 인자인 habit을 전달해 준다
+          <Habit
+            key={habit.id}
+            habitProps={habit}
+            onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
+            onDelet={this.handleDelet}
+          />
         ))}
       </ul>
     );
