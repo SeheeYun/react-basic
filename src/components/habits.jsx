@@ -16,11 +16,6 @@ class Habits extends Component {
     this.setState({ habits: habits });
   };
 
-  handleDelet = habit => {
-    const habits = this.state.habits.filter(item => item.id !== habit.id);
-    this.setState({ habits: habits });
-  };
-
   render() {
     const habits = this.props.habitsProps;
     return (
@@ -31,7 +26,7 @@ class Habits extends Component {
             habitProps={habit}
             onIncrement={this.handleIncrement}
             onDecrement={this.handleDecrement}
-            onDelet={this.handleDelet}
+            onDelet={this.props.onDelet}
           />
         ))}
       </ul>

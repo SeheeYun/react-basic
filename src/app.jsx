@@ -13,6 +13,7 @@ class App extends Component {
   };
 
   habitsCount = () => {
+    console.log('qwewq');
     const sum = this.state.habits.reduce(
       (accumulator, currentValue) => accumulator + currentValue.count,
       0
@@ -29,12 +30,22 @@ class App extends Component {
   hanledAdd = () => {
     const input = document.querySelector('.add-input');
     if (input.value) {
-      let id = this.state.habits[this.state.habits.length - 1].id;
+      const { habits } = this.state;
+      let id = habits.length;
       const newHabits = [{ id: ++id, name: `${input.value}`, count: 0 }];
-      const habits = this.state.habits.concat(newHabits);
-      this.setState({ habits: habits });
+      this.setState({ habits: habits.concat(newHabits) });
       input.value = '';
     }
+  };
+
+  handleDelet = habit => {
+    const habits = this.state.habits.filter(item => item.id !== habit.id);
+    this.setState({ habits: habits });
+  };
+
+  hanledReset = () => {
+    const habits = this.state.habits.slice(this.state.habits.length);
+    this.setState({ habits: habits });
   };
 
   render() {
@@ -59,8 +70,11 @@ class App extends Component {
         <Habits
           habitsProps={this.state.habits}
           onHabitsCount={this.habitsCount}
+          onDelet={this.handleDelet}
         />
-        <button className="habits-reset">Reset All</button>
+        <button className="habits-reset" onClick={this.hanledReset}>
+          Reset All
+        </button>
       </>
     );
   }
