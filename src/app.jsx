@@ -20,7 +20,16 @@ class App extends Component {
     this.setState({ sum: sum });
   };
 
-  hanledAdd = () => {};
+  hanledAdd = () => {
+    const value = document.querySelector('.add-input').value;
+    if (value) {
+      let habits = [...this.state.habits];
+      let id = habits[habits.length - 1].id;
+      const newHabits = [{ id: ++id, name: `${value}`, count: 0 }];
+      habits = this.state.habits.concat(newHabits);
+      this.setState({ habits: habits });
+    }
+  };
 
   render() {
     return (
