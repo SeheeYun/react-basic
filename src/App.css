@@ -53,6 +53,11 @@ button {
   color: white;
 }
 
+.habits-list {
+  height: 30rem;
+  overflow-y: scroll;
+}
+
 .habit {
   font-size: 2.5rem;
   padding: 0.5em;

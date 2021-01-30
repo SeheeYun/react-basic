@@ -11,23 +11,27 @@ class Habits extends Component {
   };
 
   handleIncrement = habit => {
-    this.setState({ count: (habit.count += 1) });
+    const habits = [...this.state.habits];
+    const index = habits.indexOf(habit);
+    habits[index].count++;
+    this.setState({ habits: habits }); // key : value 가 같으면 생략해서 쓸 수 있다
   };
 
   handleDecrement = habit => {
-    this.setState({ count: habit.count <= 0 ? 0 : (habit.count -= 1) });
+    const habits = [...this.state.habits];
+    const index = habits.indexOf(habit);
+    habits[index].count === 0 || habits[index].count--;
+    this.setState({ habits: habits });
   };
 
   handleDelet = habit => {
-    const { habits } = this.state;
-    this.setState({
-      habits: habits.filter(item => item.id !== habit.id),
-    });
+    const habits = this.state.habits.filter(item => item.id !== habit.id);
+    this.setState({ habits: habits });
   };
 
   render() {
     return (
-      <ul>
+      <ul className="habits-list">
         {this.state.habits.map(habit => (
           <Habit
             key={habit.id}
