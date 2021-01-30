@@ -20,14 +20,20 @@ class App extends Component {
     this.setState({ sum: sum });
   };
 
+  onKeyDown = e => {
+    if (e.keyCode === 13) {
+      this.hanledAdd();
+    }
+  };
+
   hanledAdd = () => {
-    const value = document.querySelector('.add-input').value;
-    if (value) {
-      let habits = [...this.state.habits];
-      let id = habits[habits.length - 1].id;
-      const newHabits = [{ id: ++id, name: `${value}`, count: 0 }];
-      habits = this.state.habits.concat(newHabits);
+    const input = document.querySelector('.add-input');
+    if (input.value) {
+      let id = this.state.habits[this.state.habits.length - 1].id;
+      const newHabits = [{ id: ++id, name: `${input.value}`, count: 0 }];
+      const habits = this.state.habits.concat(newHabits);
       this.setState({ habits: habits });
+      input.value = '';
     }
   };
 
@@ -40,7 +46,12 @@ class App extends Component {
           <span className="navbar-count">{this.state.sum}</span>
         </div>
         <ul>
-          <input className="add-input" type="text" placeholder="Habit" />
+          <input
+            className="add-input"
+            type="text"
+            placeholder="Habit"
+            onKeyDown={this.onKeyDown}
+          />
           <button className="add-button" onClick={this.hanledAdd}>
             Add
           </button>
