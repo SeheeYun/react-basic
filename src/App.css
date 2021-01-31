@@ -37,6 +37,11 @@ button {
   padding-top: 2em;
 }
 
+.add-form {
+  padding-left: 1em;
+  margin-top: 1em;
+}
+
 .add-input {
   font-size: 2rem;
 }

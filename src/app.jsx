@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './app.css';
 import Habits from './components/habits';
+import Nav from './components/nav';
+import Add from './components/add';
+import Reset from './components/reset';
 
 class App extends Component {
   state = {
@@ -9,33 +12,29 @@ class App extends Component {
       { id: 2, name: 'Running', count: 0 },
       { id: 3, name: 'Coding', count: 0 },
     ],
-    sum: 0,
   };
 
-  habitsCount = () => {
-    console.log('qwewq');
-    const sum = this.state.habits.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.count,
-      0
-    );
-    this.setState({ sum: sum });
+  handleIncrement = habit => {
+    const habits = [...this.state.habits];
+    const index = habits.indexOf(habit);
+    habits[index].count++;
+    this.setState({ habits: habits });
   };
 
-  onKeyDown = e => {
-    if (e.keyCode === 13) {
-      this.hanledAdd();
-    }
+  handleDecrement = habit => {
+    const habits = [...this.state.habits];
+    const index = habits.indexOf(habit);
+    habits[index].count === 0 || habits[index].count--;
+    this.setState({ habits: habits });
   };
 
-  hanledAdd = () => {
-    const input = document.querySelector('.add-input');
-    if (input.value) {
-      const { habits } = this.state;
-      let id = habits.length;
-      const newHabits = [{ id: ++id, name: `${input.value}`, count: 0 }];
-      this.setState({ habits: habits.concat(newHabits) });
-      input.value = '';
-    }
+  hanledAdd = value => {
+    let id =
+      this.state.habits.length > 0
+        ? this.state.habits[this.state.habits.length - 1].id
+        : 0;
+    const habits = [...this.state.habits, { id: ++id, name: value, count: 0 }];
+    this.setState({ habits });
   };
 
   handleDelet = habit => {
@@ -51,30 +50,18 @@ class App extends Component {
   render() {
     return (
       <>
-        <div className="navbar">
-          <i className="navbar-logo fas fa-feather-alt"></i>
-          Habit Tracker
-          <span className="navbar-count">{this.state.sum}</span>
-        </div>
-        <ul>
-          <input
-            className="add-input"
-            type="text"
-            placeholder="Habit"
-            onKeyDown={this.onKeyDown}
-          />
-          <button className="add-button" onClick={this.hanledAdd}>
-            Add
-          </button>
-        </ul>
+        <Nav
+          habitCount={this.state.habits.filter(item => item.count > 0).length}
+        />
+        <Add onAdd={this.hanledAdd} />
         <Habits
           habitsProps={this.state.habits}
           onHabitsCount={this.habitsCount}
+          onIncrement={this.handleIncrement}
+          onDecrement={this.handleDecrement}
           onDelet={this.handleDelet}
         />
-        <button className="habits-reset" onClick={this.hanledReset}>
-          Reset All
-        </button>
+        <Reset onReset={this.hanledReset} />
       </>
     );
   }
