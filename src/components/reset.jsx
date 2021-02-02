@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class Reset extends Component {
+class Reset extends PureComponent {
   render() {
     return (
       <button className="habits-reset" onClick={this.props.onReset}>

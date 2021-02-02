@@ -15,17 +15,25 @@ class App extends Component {
   };
 
   handleIncrement = habit => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    habits[index].count++;
-    this.setState({ habits: habits });
+    const habits = this.state.habits.map(item => {
+      if (item.id === habit.id) {
+        return { ...habit, count: habit.count + 1 };
+      } else {
+        return item;
+      }
+    });
+    this.setState({ habits });
   };
 
   handleDecrement = habit => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    habits[index].count === 0 || habits[index].count--;
-    this.setState({ habits: habits });
+    const habits = this.state.habits.map(item => {
+      if (item.id === habit.id) {
+        return { ...habit, count: habit.count <= 0 ? 0 : habit.count - 1 };
+      } else {
+        return item;
+      }
+    });
+    this.setState({ habits });
   };
 
   hanledAdd = value => {
@@ -39,12 +47,18 @@ class App extends Component {
 
   handleDelet = habit => {
     const habits = this.state.habits.filter(item => item.id !== habit.id);
-    this.setState({ habits: habits });
+    this.setState({ habits });
   };
 
   hanledReset = () => {
-    const habits = this.state.habits.slice(this.state.habits.length);
-    this.setState({ habits: habits });
+    const habits = this.state.habits.map(habit => {
+      if (habit.count === 0) {
+        return habit;
+      } else {
+        return { ...habit, count: 0 };
+      }
+    });
+    this.setState({ habits });
   };
 
   render() {
