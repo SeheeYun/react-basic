@@ -1,30 +1,27 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 
-class Add extends PureComponent {
-  formRef = React.createRef();
-  inputRef = React.createRef();
+const Add = memo(props => {
+  const formRef = React.createRef();
+  const inputRef = React.createRef();
 
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
-    const value = this.inputRef.current.value;
-    value && this.props.onAdd(value);
-    // this.inputRef.current.value = '';
-    this.formRef.current.reset();
+    const value = inputRef.current.value;
+    value && props.onAdd(value);
+    formRef.current.reset();
   };
 
-  render() {
-    return (
-      <form ref={this.formRef} className="add-form" onSubmit={this.onSubmit}>
-        <input
-          ref={this.inputRef}
-          className="add-input"
-          type="text"
-          placeholder="Habit"
-        />
-        <button className="add-button">Add</button>
-      </form>
-    );
-  }
-}
+  return (
+    <form ref={formRef} className="add-form" onSubmit={onSubmit}>
+      <input
+        ref={inputRef}
+        className="add-input"
+        type="text"
+        placeholder="Habit"
+      />
+      <button className="add-button">Add</button>
+    </form>
+  );
+});
 
 export default Add;
