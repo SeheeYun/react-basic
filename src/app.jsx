@@ -5,60 +5,53 @@ import Nav from './components/nav';
 import Add from './components/add';
 import Reset from './components/reset';
 
-const App = props => {
+const App = () => {
   const [habits, setHabits] = useState([
     { id: 1, name: 'Reading', count: 0 },
     { id: 2, name: 'Running', count: 0 },
     { id: 3, name: 'Coding', count: 0 },
   ]);
 
-  const handleIncrement = useCallback(
-    habit => {
-      setHabits(
-        habits.map(item => {
-          if (item.id === habit.id) {
-            return { ...habit, count: habit.count + 1 };
-          } else {
-            return item;
-          }
-        })
-      );
-    },
-    [habits]
-  );
+  const handleIncrement = useCallback(habit => {
+    setHabits(habits =>
+      habits.map(item => {
+        if (item.id === habit.id) {
+          return { ...habit, count: habit.count + 1 };
+        }
+        return item;
+      })
+    );
+  }, []);
 
-  const handleDecrement = useCallback(
-    habit => {
-      setHabits(
-        habits.map(item => {
-          if (item.id === habit.id) {
-            return { ...habit, count: habit.count <= 0 ? 0 : habit.count - 1 };
-          } else {
-            return item;
-          }
-        })
-      );
-    },
-    [habits]
-  );
+  const handleDecrement = useCallback(habit => {
+    setHabits(habits =>
+      habits.map(item => {
+        if (item.id === habit.id) {
+          return { ...habit, count: habit.count <= 0 ? 0 : habit.count - 1 };
+        } else {
+          return item;
+        }
+      })
+    );
+  }, []);
 
-  const hanledAdd = useCallback(
-    value => {
-      let id = habits.length > 0 ? habits[habits.length - 1].id : 0;
-      setHabits([...habits, { id: ++id, name: value, count: 0 }]);
-    },
-    [habits]
-  );
+  const hanledAdd = useCallback(value => {
+    setHabits(habits => [
+      ...habits,
+      {
+        id: habits.length > 0 ? habits[habits.length - 1].id + 1 : 0,
+        name: value,
+        count: 0,
+      },
+    ]);
+  }, []);
 
-  const handleDelet = useCallback(
-    habit => {
-      setHabits(habits.filter(item => item.id !== habit.id));
-    },
-    [habits]
-  );
+  const handleDelet = useCallback(habit => {
+    setHabits(habits => habits.filter(item => item.id !== habit.id));
+  }, []);
 
   const hanledReset = useCallback(() => {
-    setHabits(
+    setHabits(habits =>
       habits.map(habit => {
         if (habit.count !== 0) {
           return { ...habit, count: 0 };
@@ -66,7 +59,7 @@ const App = props => {
         return habit;
       })
     );
-  }, [habits]);
+  }, []);
 
   return (
     <div>

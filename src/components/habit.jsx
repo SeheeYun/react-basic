@@ -1,23 +1,22 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 
-const Habit = memo(props => {
-  const handleIncrement = useCallback(() => {
-    props.onIncrement(props.habit);
-  }, [props]);
+const Habit = memo(({ habit, onIncrement, onDecrement, onDelet }) => {
+  const handleIncrement = () => {
+    onIncrement(habit);
+  };
 
-  const handleDecrement = useCallback(() => {
-    props.onDecrement(props.habit);
-  }, [props]);
+  const handleDecrement = () => {
+    onDecrement(habit);
+  };
 
-  const handleDelet = useCallback(() => {
-    props.onDelet(props.habit);
-  }, [props]);
+  const handleDelet = () => {
+    onDelet(habit);
+  };
 
-  const { name, count } = props.habit;
   return (
     <li className="habit">
-      <span className="habit-name">{name}</span>
-      <span className="habit-count">{count}</span>
+      <span className="habit-name">{habit.name}</span>
+      <span className="habit-count">{habit.count}</span>
       <button className="habit-button habit-increase" onClick={handleIncrement}>
         <i className="fas fa-plus-square"></i>
       </button>
