@@ -1,13 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 
-class Reset extends PureComponent {
-  render() {
-    return (
-      <button className="habits-reset" onClick={this.props.onReset}>
-        Reset All
-      </button>
-    );
-  }
-}
+const Reset = memo(props => {
+  return (
+    <button className="habits-reset" onClick={props.onReset}>
+      Reset All
+    </button>
+  );
+});
 
 export default Reset;

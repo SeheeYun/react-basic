@@ -1,15 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 
-class Nav extends PureComponent {
-  render() {
-    return (
-      <nav className="navbar">
-        <i className="navbar-logo fas fa-feather-alt"></i>
-        Habit Tracker
-        <span className="navbar-count">{this.props.habitCount}</span>
-      </nav>
-    );
-  }
-}
+const Nav = memo(props => {
+  return (
+    <nav className="navbar">
+      <i className="navbar-logo fas fa-feather-alt"></i>
+      Habit Tracker
+      <span className="navbar-count">{props.habitCount}</span>
+    </nav>
+  );
+});
 
 export default Nav;

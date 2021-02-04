@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 
 const Add = memo(props => {
-  const formRef = React.createRef();
-  const inputRef = React.createRef();
+  const formRef = useRef();
+  const inputRef = useRef();
 
   const onSubmit = e => {
     e.preventDefault();

@@ -1,45 +1,34 @@
-import React, { PureComponent } from 'react';
+import React, { memo, useCallback } from 'react';
 
-class Habit extends PureComponent {
-  handleIncrement = () => {
-    this.props.onIncrement(this.props.habitProps);
-  };
+const Habit = memo(props => {
+  const handleIncrement = useCallback(() => {
+    props.onIncrement(props.habit);
+  }, [props]);
 
-  handleDecrement = () => {
-    this.props.onDecrement(this.props.habitProps);
-  };
+  const handleDecrement = useCallback(() => {
+    props.onDecrement(props.habit);
+  }, [props]);
 
-  handleDelet = () => {
-    this.props.onDelet(this.props.habitProps);
-  };
+  const handleDelet = useCallback(() => {
+    props.onDelet(props.habit);
+  }, [props]);
 
-  render() {
-    const { name, count } = this.props.habitProps;
-    return (
-      <li className="habit">
-        <span className="habit-name">{name}</span>
-        <span className="habit-count">{count}</span>
-        <button
-          className="habit-button habit-increase"
-          onClick={this.handleIncrement}
-        >
-          <i className="fas fa-plus-square"></i>
-        </button>
-        <button
-          className="habit-button habit-decrease"
-          onClick={this.handleDecrement}
-        >
-          <i className="fas fa-minus-square"></i>
-        </button>
-        <button
-          className="habit-button habit-delete"
-          onClick={this.handleDelet}
-        >
-          <i className="fas fa-trash"></i>
-        </button>
-      </li>
-    );
-  }
-}
+  const { name, count } = props.habit;
+  return (
+    <li className="habit">
+      <span className="habit-name">{name}</span>
+      <span className="habit-count">{count}</span>
+      <button className="habit-button habit-increase" onClick={handleIncrement}>
+        <i className="fas fa-plus-square"></i>
+      </button>
+      <button className="habit-button habit-decrease" onClick={handleDecrement}>
+        <i className="fas fa-minus-square"></i>
+      </button>
+      <button className="habit-button habit-delete" onClick={handleDelet}>
+        <i className="fas fa-trash"></i>
+      </button>
+    </li>
+  );
+});
 
 export default Habit;
